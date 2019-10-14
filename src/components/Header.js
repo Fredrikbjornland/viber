@@ -18,6 +18,13 @@ const useStyles = makeStyles(theme => ({
     title: {
         flexGrow: 1,
     },
+    button: {
+        color: 'white',
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit',
+    }
 }));
 
 export const Header = () => {
@@ -33,11 +40,13 @@ export const Header = () => {
                     <Typography variant="h6" className={classes.title}>
                         News
                     </Typography>
-                    <Button>
-                        <Link to="/ShowVideos">ShowVideos</Link>
+                    <Button className={classes.button}>
+                        <Link to="/ShowVideos"
+                        className={classes.link}>ShowVideos</Link>
                     </Button>
-                    <Button>
-                        <Link to="/LoginPage">Login</Link>
+                    <Button className={classes.button}>
+                        <Link to="/LoginPage"
+                        className={classes.link}>Login</Link>
                     </Button>
 
                 </Toolbar>

@@ -1,19 +1,15 @@
 import { useState, useEffect } from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
-
-
-//Run: auth-server: node authorization_code/app.js
-//client: npm start
-
-
 const spotifyApi = new SpotifyWebApi();
 
 export const useNowPlaying = () => {
     const [nowPlaying, setNowPlaying] = useState({
-        name: 'Not checked',
+        name: 'Need login',
+        artist: '',
         albumArt: ''
     })
+    
     const getHashParams = () => {
         var hashParams = {};
         var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -30,17 +26,22 @@ export const useNowPlaying = () => {
     if (token) {
         spotifyApi.setAccessToken(token);
     }
-
     useEffect(() => {
+        token &&
         spotifyApi.getMyCurrentPlaybackState()
             .then((response) => {
-                setNowPlaying({
-                    name: response.item.name,
-                    albumArt: response.item.album.images[0].url,
-                })
+                if (response.item.name !== nowPlaying.name) {
+                        setNowPlaying({
+                            name: response.item.name,
+                            artist: response.item.artists[0].name,
+                            albumArt: response.item.album.images[0].url,
+                        });
+                };
             })
-    }, [nowPlaying])
+    }, [nowPlaying, token])
 
-
-    return { nowPlaying, setNowPlaying };
+    
+    return { nowPlaying, setNowPlaying};
 }
+
+
