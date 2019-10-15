@@ -38,7 +38,7 @@ export const Header = () => {
                         <MenuIcon />
                     </IconButton>
                     <Typography variant="h6" className={classes.title}>
-                        News
+                        MUSICVIDEOS
                     </Typography>
                     <Button className={classes.button}>
                         <Link to="/ShowVideos"

@@ -7,7 +7,9 @@ export const useNowPlaying = () => {
     const [nowPlaying, setNowPlaying] = useState({
         name: 'Need login',
         artist: '',
-        albumArt: ''
+        albumArt: '',
+        durationMs: 0,
+        progressMs: 0,
     })
     
     const getHashParams = () => {
@@ -26,22 +28,24 @@ export const useNowPlaying = () => {
     if (token) {
         spotifyApi.setAccessToken(token);
     }
+
     useEffect(() => {
-        token &&
         spotifyApi.getMyCurrentPlaybackState()
             .then((response) => {
                 if (response.item.name !== nowPlaying.name) {
-                        setNowPlaying({
+                    setNowPlaying({
                             name: response.item.name,
                             artist: response.item.artists[0].name,
                             albumArt: response.item.album.images[0].url,
+                            durationMs: response.item.duration_ms,
+                            progressMs: response.progress_ms,
                         });
                 };
+                
             })
-    }, [nowPlaying, token])
-
+    })
     
-    return { nowPlaying, setNowPlaying};
+    return { nowPlaying };
 }
 
 
