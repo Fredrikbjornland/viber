@@ -5,6 +5,7 @@ export const YoutubeViewer = props => {
   let timer = Math.floor(props.timer / 1000) + 2
   const VideoOnReady = (event) => {
     event.target.mute(true);
+    event.target.playVideo();
   }
   if (!props.video) {
     return (<div className="youtubeViewer">Loading...</div>)
@@ -18,7 +19,7 @@ export const YoutubeViewer = props => {
       start: timer
     }
   };
-
+  
   return (
     <div className="youtubeViewer">
       <YouTube
