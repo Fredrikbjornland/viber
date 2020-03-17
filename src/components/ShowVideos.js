@@ -32,9 +32,7 @@ export const ShowVideos = () => {
 
   useEffect(() => {
     if (nowPlaying.timeRemaining !== 0) {
-      console.log(nowPlaying.timeRemaining)
       setTimeout(() => updateVideo(), nowPlaying.timeRemaining + 2000)
-      setInterval(() => updateVideo(), nowPlaying.timeRemaining + 2000)
     }
     if (!checker) {
       mountVideo()
