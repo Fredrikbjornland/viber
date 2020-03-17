@@ -14,7 +14,7 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
   }
 }))
-const API_KEY = 'AIzaSyA10Ihx4u76F5UpLeObQuKFFg6ypWwEmLs'
+const API_KEY = 'AIzaSyBA3yokQH-3sjJcR9ZYfeCYss9MuER9c3A'
 
 export const ShowVideos = () => {
   const [video, setVideo] = useState(null)
