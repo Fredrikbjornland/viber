@@ -18,13 +18,16 @@ export const YoutubeViewer = props => {
       start: timer
     }
   };
-
+  const videoOnReady = (e) => {
+    console.log(e.target)
+    e.target.playVideo()
+  }
   return (
     <div className="youtubeViewer">
       <YouTube
         videoId={props.video.id.videoId}
         opts={opts}
-        onReady={VideoOnReady}
+        onReady={videoOnReady}
       />
     </div>
   );
