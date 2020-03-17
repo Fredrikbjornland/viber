@@ -1,16 +1,15 @@
-import { useState} from 'react';
 import SpotifyWebApi from 'spotify-web-api-js';
 
 const spotifyApi = new SpotifyWebApi();
 
-export const useNowPlaying = () => {
-    const [nowPlaying, setNowPlaying] = useState({
+export const  getNowPlaying = async () => {
+    let nowPlaying2 = {
         name: 'Need login',
         artist: '',
         albumArt: '',
         timeRemaining: 0,
         timeProgress: 0
-    });
+    };
 
     const getHashParams = () => {
         var hashParams = {};
@@ -30,20 +29,19 @@ export const useNowPlaying = () => {
     }
     
 
-    spotifyApi.getMyCurrentPlaybackState()
+    await spotifyApi.getMyCurrentPlaybackState()
         .then((response) => {
-            if (response.item && response.item.name !== nowPlaying.name) {
-                setNowPlaying({
+            if (response.item.name !== nowPlaying2.name) {
+                nowPlaying2 = {
                     name: response.item.name,
                     artist: response.item.artists[0].name,
                     albumArt: response.item.album.images[0].url,
                     timeRemaining: response.item.duration_ms - response.progress_ms,
                     timeProgress: response.progress_ms
-                });
+                };
             };
         })
-
-    return { nowPlaying, setNowPlaying };
+    return nowPlaying2;
 }
 
 

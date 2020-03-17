@@ -4,8 +4,6 @@ import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles(theme => ({
@@ -34,15 +32,12 @@ export const Header = () => {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon />
-                    </IconButton>
                     <Typography variant="h6" className={classes.title}>
                         MUSICVIDEOS
                     </Typography>
                     <Button className={classes.button}>
                         <Link to="/ShowVideos"
-                        className={classes.link}>ShowVideos</Link>
+                        className={classes.link}>Show Videos</Link>
                     </Button>
                     <Button className={classes.button}>
                         <Link to="/LoginPage"

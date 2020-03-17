@@ -1,15 +1,12 @@
 import React from 'react';
 import YouTube from 'react-youtube';
 
-export const YoutubeViewer = ({ video }) => {
+export const YoutubeViewer = props => {
+  let timer = Math.floor(props.timer / 1000) + 2
   const VideoOnReady = (event) => {
-    console.log(event.target)
-    event.target.pauseVideo();
     event.target.mute(true);
-    //event.target.playVideoAt(x)
   }
-
-  if (!video) {
+  if (!props.video) {
     return (<div className="youtubeViewer">Loading...</div>)
   }
 
@@ -17,15 +14,18 @@ export const YoutubeViewer = ({ video }) => {
     height: '390',
     width: '640',
     playerVars: { // https://developers.google.com/youtube/player_parameters
-      autoplay: 1
+      autoplay: 1,
+      start: timer
     }
   };
 
   return (
-    <YouTube
-      videoId={video.id.videoId}
-      opts={opts}
-      onReady={VideoOnReady}
-    />
+    <div className="youtubeViewer">
+      <YouTube
+        videoId={props.video.id.videoId}
+        opts={opts}
+        onReady={VideoOnReady}
+      />
+    </div>
   );
 }

@@ -1,51 +1,77 @@
-import React, { useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNowPlaying } from './../hooks/useNowPlaying'
 import { YoutubeViewer } from './YoutubeViewer'
 import { SpotifyViewer } from './SpotifyViewer'
-import youtube from "../useYoutubeApi";
+import { getNowPlaying } from "../APIs/getNowPlaying"
+import { makeStyles } from '@material-ui/core/styles';
+import youtube from "../APIs/useYoutubeApi"
+import Grid from '@material-ui/core/Grid';
 
-const API_KEY = 'AIzaSyDkq12vVI56WYecWm4OXRgPE1jID-QeqHo'
+const useStyles = makeStyles(theme => ({
+  root: {
+    flexGrow: 1,
+    color: 'white',
+    height: '100%',
+  }
+}))
+const API_KEY = 'AIzaSyA10Ihx4u76F5UpLeObQuKFFg6ypWwEmLs'
 
 export const ShowVideos = () => {
-    const [ video, setVideo ] = useState(null)
-    const { nowPlaying } = useNowPlaying();
-    const [, setForce] = useState()
-    const timer = nowPlaying.durationMs -nowPlaying.progressMs;
-    
-    useEffect(() => {
-      console.log(timer)
-      setTimeout(()=> console.log("yeet"), timer)
-      setTimeout(()=> mountVideo(), timer)
-    },[nowPlaying]);
+  const [video, setVideo] = useState(null)
+  const { nowPlaying, setNowPlaying } = useNowPlaying();
+  const classes = useStyles();
+  let playing = {
+    name: 'Need login',
+    artist: '',
+    albumArt: '',
+    timeRemaining: 0,
+    timeProgress: 0
+  }
 
-    async function mountVideo() {
-      const { data: { items: videos } } = await youtube.get("search", {
-        params: {
-          part: "snippet",
-          key: API_KEY,
-          q: nowPlaying.name + " " + nowPlaying.artist,
-        }
-      });
-      setVideo(videos[0]);
+  const checker = nowPlaying.name === 'Need login'
+
+  useEffect(() => {
+    if (nowPlaying.timeRemaining !== 0) {
+      console.log(nowPlaying.timeRemaining)
+      setTimeout(() => updateVideo(), nowPlaying.timeRemaining + 2000)
+      setInterval(() => updateVideo(), nowPlaying.timeRemaining + 2000)
     }
-
-    if (video == null && nowPlaying.name !== 'Need login'){
-      mountVideo(nowPlaying.name + " " + nowPlaying.artist)
+    if (!checker) {
+      mountVideo()
     }
+  }, [nowPlaying])
 
-    return (
-        <div className="showVideos">
-            <SpotifyViewer nowPlaying={nowPlaying}/>
-            <YoutubeViewer video={video} />
-            <button
-                type="submit"
-                className="testButton"
-                onClick={()=>mountVideo(nowPlaying.name + " " + nowPlaying.artist)}
-            >
-                Submit
-            </button>
-        </div>
-    );
-    
+  const mountVideo = async () => {
+    const { data: { items: videos } } = await youtube.get("search", {
+      params: {
+        part: "snippet",
+        key: API_KEY,
+        q: nowPlaying.name + " " + nowPlaying.artist + "music video",
+      }
+    });
+    setVideo(videos[0]);
+  }
+  const updateVideo = () => {
+    getNowPlaying().then(value => playing = value)
+    console.log(playing)
+    setNowPlaying(playing)
+  }
+  return (
+    <Grid className={classes.root}>
+      {!checker &&
+        <Grid container
+          direction="column"
+          justify="space-between"
+          alignItems="center">
+          <Grid>
+            <SpotifyViewer nowPlaying={nowPlaying} />
+          </Grid>
+          <Grid>
+            <YoutubeViewer video={video} timer={nowPlaying.timeProgress} />
+          </Grid>
+        </Grid>}
+    </Grid>
+  );
+
 }
 
