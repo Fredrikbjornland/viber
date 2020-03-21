@@ -15,24 +15,17 @@ const useStyles = makeStyles(theme => ({
   }
 }))
 const API_KEY = 'AIzaSyBA3yokQH-3sjJcR9ZYfeCYss9MuER9c3A'
-
 export const ShowVideos = () => {
   const [video, setVideo] = useState(null)
   const { nowPlaying, setNowPlaying } = useNowPlaying();
   const classes = useStyles();
-  let playing = {
-    name: 'Need login',
-    artist: '',
-    albumArt: '',
-    timeRemaining: 0,
-    timeProgress: 0
-  }
 
   const checker = nowPlaying.name === 'Need login'
 
   useEffect(() => {
     if (nowPlaying.timeRemaining !== 0) {
-      setTimeout(() => updateVideo(), nowPlaying.timeRemaining + 2000)
+      setTimeout(() => updateVideo(), nowPlaying.timeRemaining + 1000)
+      setInterval(() => updateVideo(), 10000)
     }
     if (!checker) {
       mountVideo()
@@ -49,11 +42,15 @@ export const ShowVideos = () => {
     });
     setVideo(videos[0]);
   }
+  
   const updateVideo = () => {
-    getNowPlaying().then(value => playing = value)
-    console.log(playing)
-    setNowPlaying(playing)
+    getNowPlaying().then(value => {
+      if (value.name !== nowPlaying.name){
+        setNowPlaying(value)
+      }
+    })
   }
+
   return (
     <Grid className={classes.root}>
       {!checker &&
@@ -61,9 +58,9 @@ export const ShowVideos = () => {
           direction="column"
           justify="space-between"
           alignItems="center">
-          <Grid>
+          {/* <Grid>
             <SpotifyViewer nowPlaying={nowPlaying} />
-          </Grid>
+          </Grid> */}
           <Grid>
             <YoutubeViewer video={video} timer={nowPlaying.timeProgress} />
           </Grid>
