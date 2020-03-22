@@ -9,8 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import useInterval from '../hooks/useInterval';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { Icon} from '@iconify/react';
-import spotifyIcon from '@iconify/icons-mdi/spotify';
+// import { Icon} from '@iconify/react';
+// import spotifyIcon from '@iconify/icons-mdi/spotify';
 
 
 const useStyles = makeStyles(theme => ({
@@ -87,7 +87,7 @@ export const ShowVideos = () => {
           <Paper className={classes.paper}>
             <Grid container wrap="nowrap" alignItems="center" spacing={2}>
               <Grid item>
-                <Icon icon={spotifyIcon} height={50} color={'#1DB954'} />
+                {/* <Icon icon={spotifyIcon} height={50} color={'#1DB954'} /> */}
               </Grid>
               <Grid item xs>
                 <Typography variant="h3">Play a song on spotify to see the visuals</Typography>
