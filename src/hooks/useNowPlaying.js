@@ -6,7 +6,7 @@ const spotifyApi = new SpotifyWebApi();
 export const useNowPlaying = () => {
     const [nowPlaying, setNowPlaying] = useState({
         name: 'Need login',
-        artist: '',
+        artist: 'use',
         albumArt: '',
         timeRemaining: 0,
         timeProgress: 0
@@ -42,7 +42,6 @@ export const useNowPlaying = () => {
                 });
             };
         })
-
     return { nowPlaying, setNowPlaying };
 }
 
