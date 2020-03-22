@@ -19,7 +19,7 @@ export const LoginPage = () => {
     return (
         <div className={classes.root}>
             <Button variant="contained" size="large" color="primary.main" >
-                 <a href='https://youknowthevibes-server.herokuapp.com/' className={classes.loginButton}> Login to Spotify </a>
+                 <a href='https://localhost:8888' className={classes.loginButton}> Login to Spotify </a>
             </Button>
         </div >
     )
