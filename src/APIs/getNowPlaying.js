@@ -31,16 +31,18 @@ export const  getNowPlaying = async () => {
 
     await spotifyApi.getMyCurrentPlaybackState()
         .then((response) => {
-            if (response.item.name !== nowPlaying2.name) {
-                nowPlaying2 = {
-                    name: response.item.name,
-                    artist: response.item.artists[0].name,
-                    albumArt: response.item.album.images[0].url,
-                    timeRemaining: response.item.duration_ms - response.progress_ms,
-                    timeProgress: response.progress_ms
+            if (response.item) {
+                if (response.item.name !== nowPlaying2.name) {
+                    nowPlaying2 = {
+                        name: response.item.name,
+                        artist: response.item.artists[0].name,
+                        albumArt: response.item.album.images[0].url,
+                        timeRemaining: response.item.duration_ms - response.progress_ms,
+                        timeProgress: response.progress_ms
+                    };
                 };
             };
-        })
+        });
     return nowPlaying2;
 }
 
