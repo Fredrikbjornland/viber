@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNowPlaying } from './../hooks/useNowPlaying'
 import { YoutubeViewer } from './YoutubeViewer'
-import { SpotifyViewer } from './SpotifyViewer'
+// import { SpotifyViewer } from './SpotifyViewer'
 import { getNowPlaying } from "../APIs/getNowPlaying"
 import { makeStyles } from '@material-ui/core/styles';
 import youtube from "../APIs/useYoutubeApi"
 import Grid from '@material-ui/core/Grid';
+import useInterval from '../hooks/useInterval';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -14,18 +15,21 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
   }
 }))
-const API_KEY = 'AIzaSyBA3yokQH-3sjJcR9ZYfeCYss9MuER9c3A'
+const API_KEY = 'AIzaSyCDkrY9Eizx0hsvwpSZvHagR4NawCMtLWo'
+
 export const ShowVideos = () => {
+  const classes = useStyles();
   const [video, setVideo] = useState(null)
   const { nowPlaying, setNowPlaying } = useNowPlaying();
-  const classes = useStyles();
 
   const checker = nowPlaying.name === 'Need login'
-
+  useInterval(() => {
+    updateSong()
+  }, 6000)
+ 
   useEffect(() => {
     if (nowPlaying.timeRemaining !== 0) {
-      setTimeout(() => updateVideo(), nowPlaying.timeRemaining + 1000)
-      setInterval(() => updateVideo(), 10000)
+      setTimeout(() => updateSong(), nowPlaying.timeRemaining + 2000)
     }
     if (!checker) {
       mountVideo()
@@ -43,9 +47,9 @@ export const ShowVideos = () => {
     setVideo(videos[0]);
   }
   
-  const updateVideo = () => {
+  const updateSong = () => {
     getNowPlaying().then(value => {
-      if (value.name !== nowPlaying.name){
+      if (value.name !== nowPlaying.name && nowPlaying.name !== 'Need login'){
         setNowPlaying(value)
       }
     })

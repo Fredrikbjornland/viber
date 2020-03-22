@@ -5,7 +5,7 @@ const spotifyApi = new SpotifyWebApi();
 export const  getNowPlaying = async () => {
     let nowPlaying2 = {
         name: 'Need login',
-        artist: '',
+        artist: 'get',
         albumArt: '',
         timeRemaining: 0,
         timeProgress: 0
