@@ -9,9 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import useInterval from '../hooks/useInterval';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { Icon, InlineIcon } from '@iconify/react';
+import { Icon} from '@iconify/react';
 import spotifyIcon from '@iconify/icons-mdi/spotify';
-import Avatar from '@material-ui/core/Avatar';
 
 
 const useStyles = makeStyles(theme => ({
@@ -59,7 +58,6 @@ export const ShowVideos = () => {
     });
     setVideo(videos[0]);
   }
-  console.log(nowPlaying)
   const updateSong = () => {
     getNowPlaying().then(value => {
       if (value.name !== nowPlaying.name && nowPlaying.name !== 'Need login') {

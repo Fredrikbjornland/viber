@@ -6,20 +6,21 @@ const useStyles = makeStyles(theme => ({
     root: {
     },
     loginButton: {
+        backgroundColor: theme.palette.secondary.main,
+    },
+    link: {
         textDecoration: 'none',
-        color: 'black',
+        color: 'white'
     }
-  }));
-
-  var port = process.env.PORT || 8888
+}));
 
 export const LoginPage = () => {
 
     const classes = useStyles();
     return (
         <div className={classes.root}>
-            <Button variant="contained" size="large" color="primary.main" >
-                 <a href='https://youknowthevibes-server.herokuapp.com/' className={classes.loginButton}> Login to Spotify </a>
+            <Button variant="contained" className={classes.loginButton} size="large">
+                <a href='http://localhost:8888' className={classes.link}> Login to Spotify </a>
             </Button>
         </div >
     )
