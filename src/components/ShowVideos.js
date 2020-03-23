@@ -9,8 +9,9 @@ import Grid from '@material-ui/core/Grid';
 import useInterval from '../hooks/useInterval';
 import { Typography } from '@material-ui/core';
 import Paper from '@material-ui/core/Paper';
-import { Icon} from '@iconify/react';
-import spotifyIcon from '@iconify/icons-mdi/spotify';
+import Button from '@material-ui/core/Button';
+// import { Icon} from '@iconify/react';
+// import spotifyIcon from '@iconify/icons-mdi/spotify';
 
 
 const useStyles = makeStyles(theme => ({
@@ -20,12 +21,19 @@ const useStyles = makeStyles(theme => ({
     height: '100%',
   },
   paper: {
-    maxWidth: 400,
+    maxWidth: 450,
     margin: `${theme.spacing(1)}px auto`,
     padding: theme.spacing(2),
     backgroundColor: 'transparent',
     color: 'white',
   },
+  loginButton: {
+    backgroundColor: theme.palette.secondary.main,
+    color: 'white',
+    position: 'relative',
+    left: '30%',
+    marginTop: '30px'
+},
 }))
 const API_KEY = 'AIzaSyCDkrY9Eizx0hsvwpSZvHagR4NawCMtLWo'
 
@@ -60,7 +68,8 @@ export const ShowVideos = () => {
   }
   const updateSong = () => {
     getNowPlaying().then(value => {
-      if (value.name !== nowPlaying.name && nowPlaying.name !== 'Need login') {
+      console.log(nowPlaying.name, value.name)
+      if (value.name !== nowPlaying.name) {
         setNowPlaying(value)
       }
     })
@@ -87,10 +96,11 @@ export const ShowVideos = () => {
           <Paper className={classes.paper}>
             <Grid container wrap="nowrap" alignItems="center" spacing={2}>
               <Grid item>
-                <Icon icon={spotifyIcon} height={50} color={'#1DB954'} />
+                {/* <Icon icon={spotifyIcon} height={50} color={'#1DB954'} /> */}
               </Grid>
               <Grid item xs>
-                <Typography variant="h3">Play a song on spotify to see the visuals</Typography>
+                <Typography align="justify" variant="h3" gutterBottom>Start playing music on spotify to see the music video</Typography>
+                <Button onClick={updateSong} variant="contained" className={classes.loginButton} size="large">See video</Button>
               </Grid>
             </Grid>
           </Paper>
