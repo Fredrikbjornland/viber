@@ -1,5 +1,6 @@
 import React from 'react';
 import YouTube from 'react-youtube';
+import loadingSvg from '../images/loading.svg'
 
 export const YoutubeViewer = props => {
   let timer = Math.floor(props.timer / 1000) + 2;
@@ -11,8 +12,9 @@ export const YoutubeViewer = props => {
   }
 
   if (!props.video) {
-    return (<div className="youtubeViewer">Loading...</div>)
+    return (<div className="youtubeViewer"><img src={loadingSvg} alt="loading"/></div>)
   }
+  
   const opts = {
     height: window.innerHeight,
     width: window.innerWidth,
